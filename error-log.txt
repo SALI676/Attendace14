@@ -1,0 +1,330 @@
+[2026-09-23T03:42:13.678Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:13.914Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:14.058Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:14.103Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:14.141Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:14.373Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:14.419Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:14.462Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:14.696Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:14.756Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:14.795Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:14.881Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:15.015Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:15.076Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:15.262Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:15.300Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:15.339Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:15.581Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:15.617Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:15.828Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:15.864Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:15.899Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:16.102Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:16.334Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:16.374Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:16.411Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:16.606Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:16.912Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:16.952Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:16.989Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:17.165Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:17.205Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:42:17.242Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:41.659Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:41.691Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:41.762Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:41.955Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:41.995Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:42.030Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:42.221Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:42.259Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:42.293Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:44.987Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:45.027Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:45.064Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:45.271Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:45.309Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:45.446Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:45.512Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:45.666Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:45.738Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:45.777Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:45.966Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:46.002Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:46.041Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:46.294Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:46.328Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:46.542Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:46.580Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:44:46.617Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:46:57.370Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:46:57.402Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:46:57.435Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:46:57.616Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:46:57.673Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+
+[2026-09-23T03:46:57.706Z] GET /api/data failed: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Attendances\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Attendances\server.js:19:22
+

@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Table - Blue Dolphin Swimming Club</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    :root {
+      --border-color: #333;
+      --bg-color: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Khmer OS", "Khmer OS Battambang", "Siemreap", Arial, sans-serif;
+      line-height: 1.2;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 10px;
+    }
+
+    .controls {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn {
+      background-color: #0056b3;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-family: "Khmer OS", "Khmer OS Battambang", Arial, sans-serif;
+    }
+
+    .btn-save-web { background-color: #17a2b8; }
+    .btn-save-web:hover { background-color: #138496; }
+    .btn-save-pdf { background-color: #28a745; }
+    .btn-save-pdf:hover { background-color: #218838; }
+    .btn-section { background-color: #6f42c1; }
+    .btn-section:hover { background-color: #5a32a3; }
+    .btn:hover { opacity: 0.9; }
+
+    /* A4 Document Sheet Styling */
+    .a4-page {
+      position: relative;
+      background: #ffffff;
+      width: 100%;
+      max-width: 850px;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    .header-container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .header-title {
+      text-align: center;
+      flex-grow: 1;
+      font-size: 18px;
+      font-weight: bold;
+      font-family: "Khmer OS Muol Light", "Khmer OS", Arial, sans-serif;
+    }
+
+    .logo-img {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+    }
+
+    .instructor-info {
+      position: relative;
+      z-index: 2;
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: left;
+      width: 100%;
+      white-space: nowrap;
+    }
+
+    .instructor-name-input {
+      font-size: 15px;
+      font-weight: bold;
+      font-family: inherit;
+      border: 1px dashed transparent;
+      padding: 0 2px;
+      border-radius: 3px;
+      outline: none;
+      background: transparent;
+      color: inherit;
+      display: inline;
+    }
+
+    .instructor-name-input:hover, 
+    .instructor-name-input:focus {
+      border-color: #0056b3;
+      background-color: rgba(0, 86, 179, 0.05);
+    }
+
+    #sections-wrapper {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .section-block {
+      width: 100%;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: bold;
+      outline: none;
+      border: 1px dashed transparent;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+
+    .section-title:hover, .section-title:focus {
+      border-color: #0056b3;
+      background-color: rgba(0, 86, 179, 0.05);
+    }
+
+    .section-actions {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-mini {
+      padding: 3px 6px;
+      font-size: 11px;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+      font-family: "Khmer OS", "Khmer OS Battambang", Arial, sans-serif;
+    }
+
+    .btn-mini-add { background-color: #28a745; }
+    .btn-mini-clear { background-color: #ffc107; color: #333; }
+    .btn-mini-remove { background-color: #dc3545; }
+
+    .table-highlight-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: #f1f3f5;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .table-highlight-group input[type="color"] {
+      border: none;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      background: none;
+    }
+
+    .table-range-input {
+      width: 45px;
+      padding: 2px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      text-align: center;
+      font-family: inherit;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 12px;
+      background-color: transparent;
+    }
+
+    tr {
+      height: 32px;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+
+    th, td {
+      border: 1px solid var(--border-color);
+      padding: 2px 3px;
+      background-color: transparent;
+    }
+
+    th {
+      font-weight: bold;
+      outline: none;
+      height: 35px;
+    }
+
+    th[contenteditable="true"]:hover, 
+    th[contenteditable="true"]:focus {
+      background-color: rgba(0, 86, 179, 0.08);
+      border-style: dashed;
+    }
+
+    input[type="text"], input[type="date"], select {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      text-align: center;
+      text-align-last: center;
+      font-size: 12px;
+      font-family: "Khmer OS", "Khmer OS Battambang", Arial, sans-serif;
+      cursor: pointer;
+    }
+
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+    }
+
+    input[type="date"]:invalid::-webkit-datetime-edit {
+      color: transparent;
+    }
+
+    .class-input {
+      background-color: transparent;
+      font-weight: bold;
+    }
+
+    .class-input:hover, .class-input:focus {
+      background-color: rgba(0, 86, 179, 0.05);
+      border: 1px dashed #0056b3;
+      border-radius: 3px;
+    }
+
+    /* Review Students Section */
+    .review-container {
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      border-radius: 6px;
+      background: #fafafa;
+      /* Removed break-before: page so it can start on Page 1 if there is space */
+    }
+
+    .review-header {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-family: "Khmer OS", Arial, sans-serif;
+      color: #111;
+      break-inside: avoid;
+    }
+
+    .review-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .review-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-bottom: 1px dashed #dcdcdc;
+      padding-bottom: 10px;
+      /* Allow individual student rows to split or flow naturally between pages */
+      page-break-inside: auto !important;
+      break-inside: auto !important;
+    }
+
+    .review-student-name {
+      font-weight: bold;
+      font-size: 15px;
+      color: #0056b3;
+      letter-spacing: 0.3px;
+      break-after: avoid;
+    }
+
+    .level-block-container {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding-left: 10px;
+      break-inside: avoid;
+    }
+
+    .level-title-label {
+      font-size: 13px;
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 4px;
+      display: inline-block;
+      width: fit-content;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .level-survival {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      color: #0d47a1;
+      border-left: 4px solid #1976d2;
+    }
+
+    .level-intermediate {
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      color: #1b5e20;
+      border-left: 4px solid #388e3c;
+    }
+
+    .level-advanced {
+      background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+      color: #e65100;
+      border-left: 4px solid #f57c00;
+    }
+
+    .skills-rating-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      background: #fff;
+      padding: 3px 6px;
+      border-radius: 4px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .stars {
+      display: inline-flex;
+      cursor: pointer;
+      font-size: 13px;
+      color: #ccc;
+      gap: 1px;
+    }
+
+    .star {
+      position: relative;
+      display: inline-block;
+      color: #ccc;
+    }
+
+    .star.full {
+      color: #ffc107;
+    }
+
+    .star.half {
+      color: #ffc107;
+      background: linear-gradient(90deg, #ffc107 50%, #ccc 50%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .note-input-container {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      break-inside: avoid;
+    }
+
+    .note-input-container label {
+      font-size: 12px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    .note-input {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 5px 8px;
+      font-size: 12px;
+      font-family: inherit;
+      background: #fff;
+      outline: none;
+    }
+
+    .note-input:focus {
+      border-color: #0056b3;
+    }
+
+    @media print {
+      @page { 
+        size: A4 portrait; 
+        margin: 8mm; 
+      }
+      html, body {
+        height: auto;
+        background: #fff;
+        padding: 0;
+        margin: 0;
+      }
+      .controls, .section-actions, .btn-mini-review { 
+        display: none !important; 
+      }
+      .a4-page { 
+        box-shadow: none; 
+        width: 100%; 
+        max-width: 100%; 
+        padding: 0; 
+      }
+      tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      th, td { 
+        border: 1px solid #000; 
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="controls">
+    <button class="btn btn-section" onclick="addNewSection('Teacher Training')">+ Add Table</button>
+    <button class="btn btn-save-web" onclick="saveToWebsite()">💾 Save</button>
+    <button class="btn btn-save-pdf" onclick="exportToPDF()">📥 PDF</button>
+  </div>
+
+  <div class="a4-page">
+    <div class="header-container">
+      <div style="width: 100px;"></div>
+      <div class="header-title">
+        Attendant Table / តារាងវត្តមានសិស្ស
+      </div>
+      <img 
+        src="https://i.postimg.cc/BvHVntx6/photo-2022-03-09-20-31-54-removebg-preview.png" 
+        alt="Blue Dolphin Swimming Club Logo" 
+        class="logo-img"
+      >
+    </div>
+
+    <div class="instructor-info">
+      Instructor's name : <span id="instructor-name" class="instructor-name-input" contenteditable="true" spellcheck="false">LAY SALI</span>
+    </div>
+
+    <div id="sections-wrapper"></div>
+  </div>
+
+  <!-- Shared Global Datalist for Student Suggestions -->
+  <datalist id="student-list"></datalist>
+
+  <script>
+    const classSequence = [
+      "1st", "2nd", "3rd", "4th", "5th", 
+      "6th", "7th", "8th", "9th", "10th", "11th",
+      "12th", "13th", "14th", "15th", "16th", "17th", "18th", "19th", "20th",
+      "21st", "22nd", "23rd", "24th", "25th", "26th", "27th", "28th", "29th", "30th",
+      "31st", "32nd", "33rd", "34th", "35th", "36th", "37th", "38th", "39th", "40th",
+      "41st", "42nd", "43rd", "44th", "45th", "46th", "47th", "48th"
+    ];
+
+    const levelSkillsMap = {
+      "Survival Swimming (Level1)": ["Doggy Paddle", "BackFloat", "Doggy Paddle switch BackFload", "Basic Freestyle"],
+      "Intermediate Swimming (Level2)": ["Advance Freestyle", "Backstroke", "Breaststroke", "Flipturn"],
+      "Advanced Swimming (Level3)": ["Diving","Butterfly", "Treading Water", "Other Technique"]
+    };
+
+    let sectionCounter = 0;
+
+    // Point this at your deployed backend (see backend/README.md).
+    //const API_BASE_URL = 'http://localhost:3000/api';
+    const API_BASE_URL = 'https://Attendace14.onrender.com/api';
+
+    function updateGlobalStudentList() {
+      const datalist = document.getElementById('student-list');
+      datalist.innerHTML = '';
+      const uniqueNames = new Set();
+
+      document.querySelectorAll('.student-name').forEach(input => {
+        const val = input.value.trim();
+        if (val !== '') {
+          uniqueNames.add(val);
+        }
+      });
+
+      uniqueNames.forEach(name => {
+        const option = document.createElement('option');
+        option.value = name;
+        datalist.appendChild(option);
+      });
+    }
+
+    function createRowHTML(rowNumber, data = {}) {
+      const tr = document.createElement('tr');
+      if (data.highlightColor) {
+        tr.style.backgroundColor = data.highlightColor;
+      }
+      tr.innerHTML = `
+        <td class="row-no">${rowNumber}</td>
+        <td><input type="text" class="student-name" list="student-list" value="${data.name || ''}" oninput="updateGlobalStudentList()" onchange="handleStudentInput(this)" onkeydown="handleKeyDown(event)"></td>
+        <td><input type="text" class="kid-input" value="${data.kid || ''}" onchange="handleTableUpdate(this)" onkeydown="handleKeyDown(event)"></td>
+        <td><input type="text" class="adult-input" value="${data.adult || ''}" onchange="handleTableUpdate(this)" onkeydown="handleKeyDown(event)"></td>
+        <td><input type="text" class="time-input" value="${data.time || ''}" onchange="handleTableUpdate(this)" onkeydown="handleKeyDown(event)"></td>
+        <td><input type="text" class="class-input" value="${data.classVal || ''}" placeholder="-" onchange="handleTableUpdate(this)" onkeydown="handleKeyDown(event)"></td>
+        <td>
+          <select class="location-input" onchange="handleTableUpdate(this)" onkeydown="handleKeyDown(event)">
+            <option value=""></option>
+            <option value="Home" ${data.location === 'Home' ? 'selected' : ''}>Home</option>
+            <option value="PH" ${data.location === 'PH' ? 'selected' : ''}>PH</option>
+            <option value="CM 271" ${data.location === 'CM 271' ? 'selected' : ''}>CM 271</option>
+            <option value="CM Sen Sok" ${data.location === 'CM Sen Sok' ? 'selected' : ''}>CM Sen Sok</option>
+            <option value="The Royal Platinum" ${data.location === 'The Royal Platinum' ? 'selected' : ''}>The Royal Platinum</option>
+            <option value="Orkide 2004" ${data.location === 'Orkide 2004' ? 'selected' : ''}>Orkide 2004</option>
+            <option value="Orkide 6A" ${data.location === 'Orkide 6A' ? 'selected' : ''}>Orkide 6A</option>
+            <option value="Urban" ${data.location === 'Urban' ? 'selected' : ''}>Urban</option>
+            <option value="Gold Fitness(SR)" ${data.location === 'Gold Fitness(SR)' ? 'selected' : ''}>Gold Fitness(SR)</option>
+          </select>
+        </td>
+        <td><input type="date" class="date-input" value="${data.date || ''}" required onkeydown="handleKeyDown(event)"></td>
+      `;
+      return tr;
+    }
+
+    function addNewSection(titleText = "", rowsData = null, reviewsData = null, savedNote = "") {
+      sectionCounter++;
+      const wrapper = document.getElementById('sections-wrapper');
+      const sectionBlock = document.createElement('div');
+      sectionBlock.className = 'section-block';
+      sectionBlock.id = `section-${sectionCounter}`;
+
+      const isFirstTable = wrapper.children.length === 0;
+      const title = isFirstTable ? '' : titleText;
+      const editableAttr = isFirstTable ? '' : 'contenteditable="true" spellcheck="false"';
+
+      sectionBlock.innerHTML = `
+        <div class="section-header">
+          <span class="section-title" ${editableAttr} placeholder="Enter Section Title">${title}</span>
+          <div class="section-actions">
+            <button class="btn-mini btn-mini-add" onclick="addRowToSection('${sectionBlock.id}')">+ Add Row</button>
+            <button class="btn-mini btn-mini-review" style="background-color: #e83e8c;" onclick="toggleReviewSection('${sectionBlock.id}')">⭐Review</button>
+            <button class="btn-mini btn-mini-clear" onclick="clearSectionData('${sectionBlock.id}')">Clear</button>
+            <button class="btn-mini btn-mini-remove" onclick="removeRowFromSection('${sectionBlock.id}')">- Remove Row</button>
+            ${!isFirstTable ? `<button class="btn-mini btn-mini-remove" onclick="removeSection('${sectionBlock.id}')">Delete Table</button>` : ''}
+            
+            <div class="table-highlight-group">
+              <input type="color" class="table-color-picker" value="#ffc107">
+              <input type="text" class="table-range-input" placeholder="1-8">
+              <button class="btn-mini" style="background-color: #0056b3;" onclick="applyHighlightToSection('${sectionBlock.id}')">🎨</button>
+              <button class="btn-mini" style="background-color: #6c757d;" onclick="clearHighlightFromSection('${sectionBlock.id}')">✕</button>
+            </div>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 6%;" ${editableAttr}>No</th>
+                <th style="width: 21%;" ${editableAttr}>Student name (s)</th>
+                <th style="width: 4%;" ${editableAttr}>Kid</th>
+                <th style="width: 4%;" ${editableAttr}>Adult</th>
+                <th style="width: 15%;" ${editableAttr}>Time (In - Out)</th>
+                <th style="width: 20%;" ${editableAttr}>Class (1<sup>st</sup>-10<sup>th</sup>)</th>
+                <th style="width: 17%;" ${editableAttr}>Location</th>
+                <th style="width: 16%;" ${editableAttr}>Date</th>
+              </tr>
+            </thead>
+            <tbody class="table-body">
+            </tbody>
+          </table>
+        </div>
+        <div class="review-container" id="${sectionBlock.id}-review" style="display: none;">
+          <div class="review-header">Comprehensive Skill Evaluation / ការវាយតម្លៃគ្រប់កម្រិតសិស្ស</div>
+          <div class="review-grid"></div>
+          <div class="note-input-container">
+            <label>Note / កំណត់ចំណាំ:</label>
+            <input type="text" class="note-input" placeholder="Add custom notes here..." value="${savedNote || ''}">
+          </div>
+        </div>
+      `;
+
+      wrapper.appendChild(sectionBlock);
+
+      const tbody = sectionBlock.querySelector('.table-body');
+      if (rowsData && rowsData.length > 0) {
+        rowsData.forEach((row, i) => {
+          tbody.appendChild(createRowHTML(i + 1, row));
+        });
+      } else {
+        const initialRows = isFirstTable ? 20 : 5;
+        for (let i = 1; i <= initialRows; i++) {
+          tbody.appendChild(createRowHTML(i));
+        }
+      }
+
+      if (reviewsData && reviewsData.length > 0) {
+        sectionBlock._savedReviews = reviewsData;
+      }
+
+      updateGlobalStudentList();
+    }
+
+    function toggleReviewSection(sectionId) {
+      const reviewDiv = document.getElementById(`${sectionId}-review`);
+      if (!reviewDiv) return;
+
+      if (reviewDiv.style.display === 'none') {
+        renderReviewRows(sectionId);
+        reviewDiv.style.display = 'block';
+      } else {
+        reviewDiv.style.display = 'none';
+      }
+    }
+
+    function renderReviewRows(sectionId, preloadedReviews = null) {
+      const section = document.getElementById(sectionId);
+      const reviewGrid = section.querySelector('.review-grid');
+      reviewGrid.innerHTML = '';
+
+      const studentNamesMap = new Map();
+      section.querySelectorAll('.student-name').forEach(input => {
+        const val = input.value.trim();
+        if (val !== '') {
+          const splitNames = val.split(/\s*(?:&|\+|and|-|,)\s*/i);
+          splitNames.forEach(name => {
+            const cleanName = name.trim();
+            if (cleanName !== '') {
+              const lower = cleanName.toLowerCase();
+              if (!studentNamesMap.has(lower)) {
+                studentNamesMap.set(lower, cleanName);
+              }
+            }
+          });
+        }
+      });
+
+      const studentNames = Array.from(studentNamesMap.values());
+
+      if (studentNames.length === 0) {
+        reviewGrid.innerHTML = '<div style="font-size: 11px; color: #666; text-align: center; padding: 5px;">Please add student names in the table first.</div>';
+        return;
+      }
+
+      const reviewsMap = {};
+      const savedData = preloadedReviews || section._savedReviews;
+      if (savedData) {
+        savedData.forEach(item => {
+          reviewsMap[item.name.toLowerCase()] = item.ratings;
+        });
+        if (preloadedReviews) {
+          section._savedReviews = null;
+        }
+      }
+
+      studentNames.forEach(name => {
+        const row = document.createElement('div');
+        row.className = 'review-row';
+
+        let levelsHtml = `<div class="review-student-name">${name}</div>`;
+        const nameKey = name.toLowerCase();
+
+        Object.keys(levelSkillsMap).forEach(levelName => {
+          let skillsHtml = '';
+          const skills = levelSkillsMap[levelName];
+
+          let levelClass = 'level-survival';
+          if (levelName.includes('Level2')) levelClass = 'level-intermediate';
+          if (levelName.includes('Level3')) levelClass = 'level-advanced';
+
+          skills.forEach(skill => {
+            let currentRating = 0;
+            if (reviewsMap[nameKey] && reviewsMap[nameKey][levelName] && reviewsMap[nameKey][levelName][skill] !== undefined) {
+              currentRating = reviewsMap[nameKey][levelName][skill];
+            } else if (reviewsMap[nameKey] && reviewsMap[nameKey][skill] !== undefined) {
+              currentRating = reviewsMap[nameKey][skill];
+            }
+            
+            let starsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+              let starClass = '';
+              if (currentRating >= i) {
+                starClass = 'full';
+              } else if (currentRating >= i - 0.5) {
+                starClass = 'half';
+              }
+              
+              starsHtml += `
+                <span class="star ${starClass}" onclick="handleStarClick(event, this, ${i})">★</span>
+              `;
+            }
+
+            skillsHtml += `
+              <div class="skill-item">
+                <span>${skill}:</span>
+                <span class="stars" data-level="${levelName}" data-skill="${skill}">
+                  ${starsHtml}
+                </span>
+              </div>
+            `;
+          });
+
+          levelsHtml += `
+            <div class="level-block-container">
+              <span class="level-title-label ${levelClass}">${levelName}</span>
+              <div class="skills-rating-group">${skillsHtml}</div>
+            </div>
+          `;
+        });
+
+        row.innerHTML = levelsHtml;
+        reviewGrid.appendChild(row);
+      });
+    }
+
+    function handleStarClick(event, starElement, starIndex) {
+      const rect = starElement.getBoundingClientRect();
+      const clickX = event.clientX - rect.left;
+      const isHalf = clickX < rect.width / 2;
+      const clickedRating = isHalf ? starIndex - 0.5 : starIndex;
+
+      const parent = starElement.parentNode;
+      const stars = parent.querySelectorAll('.star');
+
+      let currentStarRating = 0;
+      if (starElement.classList.contains('full')) {
+        currentStarRating = starIndex;
+      } else if (starElement.classList.contains('half')) {
+        currentStarRating = starIndex - 0.5;
+      }
+
+      let newRating = clickedRating;
+      if (currentStarRating === clickedRating) {
+        if (isHalf) {
+          newRating = starIndex; 
+        } else {
+          newRating = 0; 
+        }
+      }
+      
+      stars.forEach((s, idx) => {
+        const sIndex = idx + 1;
+        s.className = 'star';
+        if (sIndex < starIndex) {
+          s.classList.add('full');
+        } else if (sIndex === starIndex) {
+          if (newRating === sIndex) {
+            s.classList.add('full');
+          } else if (newRating === sIndex - 0.5) {
+            s.classList.add('half');
+          }
+        }
+      });
+    }
+
+    function addRowToSection(sectionId) {
+      const tbody = document.querySelector(`#${sectionId} .table-body`);
+      tbody.appendChild(createRowHTML(tbody.children.length + 1));
+      handleTableUpdate(tbody);
+    }
+
+    function clearSectionData(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+
+      if (confirm('Are you sure you want to clear all data in this table?')) {
+        section.querySelectorAll('tbody tr').forEach(tr => {
+          tr.style.backgroundColor = '';
+          tr.querySelectorAll('input').forEach(input => {
+            input.value = '';
+          });
+          tr.querySelectorAll('select').forEach(select => {
+            select.value = '';
+          });
+        });
+        const noteInput = section.querySelector('.note-input');
+        if (noteInput) noteInput.value = '';
+
+        const reviewDiv = document.getElementById(`${sectionId}-review`);
+        if (reviewDiv) reviewDiv.style.display = 'none';
+        updateGlobalStudentList();
+        saveToWebsite();
+      }
+    }
+
+    function removeRowFromSection(sectionId) {
+      const tbody = document.querySelector(`#${sectionId} .table-body`);
+      if (tbody.children.length > 1) {
+        tbody.removeChild(tbody.lastChild);
+        handleTableUpdate(tbody);
+      }
+    }
+
+    function removeSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.remove();
+        updateGlobalStudentList();
+      }
+    }
+
+    function parseRowRanges(inputStr, maxRow) {
+      const rowsToHighlight = new Set();
+      const parts = inputStr.split(',');
+      
+      parts.forEach(part => {
+        part = part.trim();
+        if (part.includes('-')) {
+          const range = part.split('-');
+          const start = parseInt(range[0].trim());
+          const end = parseInt(range[1].trim());
+          if (!isNaN(start) && !isNaN(end)) {
+            for (let i = Math.min(start, end); i <= Math.max(start, end); i++) {
+              if (i >= 1 && i <= maxRow) rowsToHighlight.add(i);
+            }
+          }
+        } else {
+          const num = parseInt(part);
+          if (!isNaN(num) && num >= 1 && num <= maxRow) {
+            rowsToHighlight.add(num);
+          }
+        }
+      });
+      return rowsToHighlight;
+    }
+
+    function applyHighlightToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+
+      const color = section.querySelector('.table-color-picker').value;
+      const inputVal = section.querySelector('.table-range-input').value.trim();
+      const allRows = section.querySelectorAll('tbody tr');
+      
+      if (!inputVal) {
+        alert('Please enter row numbers (e.g., 1-8 or 1,3,5-8)');
+        return;
+      }
+
+      const targetRows = parseRowRanges(inputVal, allRows.length);
+
+      allRows.forEach((tr, index) => {
+        const rowNum = index + 1;
+        if (targetRows.has(rowNum)) {
+          tr.style.backgroundColor = color;
+        }
+      });
+    }
+
+    function clearHighlightFromSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+
+      const inputVal = section.querySelector('.table-range-input').value.trim();
+      const allRows = section.querySelectorAll('tbody tr');
+      
+      if (!inputVal) {
+        allRows.forEach(tr => { tr.style.backgroundColor = ''; });
+        return;
+      }
+
+      const targetRows = parseRowRanges(inputVal, allRows.length);
+
+      allRows.forEach((tr, index) => {
+        const rowNum = index + 1;
+        if (targetRows.has(rowNum)) {
+          tr.style.backgroundColor = '';
+        }
+      });
+    }
+
+    function handleStudentInput(inputElement) {
+      updateGlobalStudentList();
+      if (inputElement.value.trim() === '') {
+        const row = inputElement.closest('tr');
+        row.querySelector('.kid-input').value = '';
+        row.querySelector('.adult-input').value = '';
+        row.querySelector('.time-input').value = '';
+        row.querySelector('.class-input').value = '';
+        row.querySelector('.date-input').value = '';
+        row.querySelector('.location-input').value = '';
+      }
+      handleTableUpdate(inputElement);
+    }
+
+    function handleKeyDown(event) {
+      const input = event.target;
+      const td = input.closest('td');
+      const tr = td.closest('tr');
+      const tbody = tr.closest('tbody');
+      
+      const colIndex = Array.from(tr.children).indexOf(td);
+      const rowIndex = Array.from(tbody.children).indexOf(tr);
+
+      if (event.key === 'Enter' || event.key === 'ArrowDown') {
+        event.preventDefault();
+        const nextRow = tbody.children[rowIndex + 1];
+        if (nextRow) {
+          const nextTarget = nextRow.children[colIndex].querySelector('input, select');
+          if (nextTarget) nextTarget.focus();
+        }
+      } 
+      else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        const prevRow = tbody.children[rowIndex - 1];
+        if (prevRow) {
+          const prevTarget = prevRow.children[colIndex].querySelector('input, select');
+          if (prevTarget) prevTarget.focus();
+        }
+      }
+      else if (event.key === 'ArrowRight') {
+        if (input.tagName === 'SELECT' || input.type === 'date' || input.selectionEnd === input.value.length) {
+          let nextTd = td.nextElementSibling;
+          while (nextTd) {
+            const nextTarget = nextTd.querySelector('input, select');
+            if (nextTarget) {
+              event.preventDefault();
+              nextTarget.focus();
+              break;
+            }
+            nextTd = nextTd.nextElementSibling;
+          }
+        }
+      }
+      else if (event.key === 'ArrowLeft') {
+        if (input.tagName === 'SELECT' || input.type === 'date' || input.selectionStart === 0) {
+          let prevTd = td.previousElementSibling;
+          while (prevTd) {
+            const prevTarget = prevTd.querySelector('input, select');
+            if (prevTarget) {
+              event.preventDefault();
+              prevTarget.focus();
+              break;
+            }
+            prevTd = prevTd.previousElementSibling;
+          }
+        }
+      }
+    }
+
+    function handleTableUpdate(element) {
+      const tbody = element.tagName ? element.closest('.table-body') : element;
+      if (!tbody) return;
+
+      const nameInputs = tbody.querySelectorAll('.student-name');
+      const kidInputs = tbody.querySelectorAll('.kid-input');
+      const adultInputs = tbody.querySelectorAll('.adult-input');
+      const timeInputs = tbody.querySelectorAll('.time-input');
+      const classInputs = tbody.querySelectorAll('.class-input');
+      const locationInputs = tbody.querySelectorAll('.location-input');
+      const noCells = tbody.querySelectorAll('.row-no');
+
+      noCells.forEach((cell, index) => {
+        cell.innerText = index + 1;
+      });
+
+      const studentTracker = {};
+      const exactProfiles = {};
+
+      nameInputs.forEach((nameInput, index) => {
+        const fullName = nameInput.value.trim().replace(/\s+/g, ' ').toLowerCase();
+        
+        if (fullName !== '') {
+          if (!exactProfiles[fullName]) {
+            exactProfiles[fullName] = { kid: '', adult: '', time: '', location: '' };
+          }
+
+          if (kidInputs[index].value.trim() !== '') {
+            exactProfiles[fullName].kid = kidInputs[index].value.trim();
+          }
+          if (adultInputs[index].value.trim() !== '') {
+            exactProfiles[fullName].adult = adultInputs[index].value.trim();
+          }
+          if (timeInputs[index].value.trim() !== '') {
+            exactProfiles[fullName].time = timeInputs[index].value.trim();
+          }
+          if (locationInputs[index].value !== '') {
+            exactProfiles[fullName].location = locationInputs[index].value;
+          }
+        }
+      });
+
+      nameInputs.forEach((nameInput, index) => {
+        const fullName = nameInput.value.trim().replace(/\s+/g, ' ').toLowerCase();
+        
+        if (fullName !== '') {
+          const classInput = classInputs[index];
+          let val = classInput.value.trim();
+
+          if (/^\d+$/.test(val)) {
+            const num = parseInt(val, 10);
+            if (num > 0 && num <= classSequence.length) {
+              val = classSequence[num - 1];
+              classInput.value = val;
+            }
+          }
+
+          if (val !== '') {
+            const idx = classSequence.indexOf(val);
+            if (idx !== -1) {
+              studentTracker[fullName] = idx;
+            }
+          } else {
+            if (studentTracker[fullName] !== undefined) {
+              const nextIdx = studentTracker[fullName] + 1;
+              if (nextIdx < classSequence.length) {
+                classInput.value = classSequence[nextIdx];
+                studentTracker[fullName] = nextIdx;
+              } else {
+                classInput.value = `${classSequence.length}+`;
+              }
+            } else {
+              classInput.value = classSequence[0];
+              studentTracker[fullName] = 0;
+            }
+          }
+
+          const currentVal = classInput.value.trim();
+          const currentIdx = classSequence.indexOf(currentVal);
+          if (currentIdx !== -1) {
+            studentTracker[fullName] = currentIdx;
+          }
+
+          const profile = exactProfiles[fullName];
+          if (profile) {
+            if (profile.kid !== '' && kidInputs[index].value.trim() === '') kidInputs[index].value = profile.kid;
+            if (profile.adult !== '' && adultInputs[index].value.trim() === '') adultInputs[index].value = profile.adult;
+            if (profile.time !== '' && timeInputs[index].value.trim() === '') timeInputs[index].value = profile.time;
+            if (profile.location !== '' && locationInputs[index].value === '') {
+              locationInputs[index].value = profile.location;
+            }
+          }
+        }
+      });
+      updateGlobalStudentList();
+    }
+
+    function saveToWebsite() {
+      const data = {
+        instructor: document.getElementById('instructor-name').innerText,
+        sections: []
+      };
+
+      document.querySelectorAll('.section-block').forEach(section => {
+        const title = section.querySelector('.section-title').innerText;
+        const note = section.querySelector('.note-input') ? section.querySelector('.note-input').value : '';
+
+        const rows = [];
+        section.querySelectorAll('tbody tr').forEach(tr => {
+          rows.push({
+            name: tr.querySelector('.student-name').value,
+            kid: tr.querySelector('.kid-input').value,
+            adult: tr.querySelector('.adult-input').value,
+            time: tr.querySelector('.time-input').value,
+            classVal: tr.querySelector('.class-input').value,
+            location: tr.querySelector('.location-input').value,
+            date: tr.querySelector('.date-input').value,
+            highlightColor: tr.style.backgroundColor || ''
+          });
+        });
+
+        const reviews = [];
+        section.querySelectorAll('.review-row').forEach(revRow => {
+          const sName = revRow.querySelector('.review-student-name').innerText;
+          const ratings = {};
+
+          revRow.querySelectorAll('.level-block-container').forEach(levelBlock => {
+            const levelLabel = levelBlock.querySelector('.level-title-label').innerText;
+            ratings[levelLabel] = {};
+
+            levelBlock.querySelectorAll('.skill-item').forEach(skillItem => {
+              const skillLabel = skillItem.querySelector('span').innerText.replace(':', '').trim();
+              const fullStars = skillItem.querySelectorAll('.star.full').length;
+              const hasHalfStar = skillItem.querySelector('.star.half') !== null;
+              const ratingValue = fullStars + (hasHalfStar ? 0.5 : 0);
+              ratings[levelLabel][skillLabel] = ratingValue;
+            });
+          });
+
+          reviews.push({ name: sName, ratings: ratings });
+        });
+
+        data.sections.push({ title, rows, reviews, note });
+      });
+
+      fetch(`${API_BASE_URL}/data`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(res => {
+          if (!res.ok) throw new Error('Save request failed');
+          alert('Data successfully saved to the database!');
+        })
+        .catch(err => {
+          console.error('Save to database failed:', err);
+          alert('Could not save to the database. Check that the backend server is running and try again.');
+        });
+    }
+
+    async function loadFromWebsite() {
+      try {
+        const res = await fetch(`${API_BASE_URL}/data`);
+        if (!res.ok) return false;
+
+        const data = await res.json();
+        if (!data || !Array.isArray(data.sections) || data.sections.length === 0) {
+          return false;
+        }
+
+        document.getElementById('instructor-name').innerText = data.instructor || 'LAY SALI';
+        document.getElementById('sections-wrapper').innerHTML = '';
+        sectionCounter = 0;
+
+        data.sections.forEach((sec, idx) => {
+          if (idx === 0) {
+            addNewSection("", sec.rows, sec.reviews, sec.note);
+          } else {
+            addNewSection(sec.title, sec.rows, sec.reviews, sec.note);
+          }
+        });
+        updateGlobalStudentList();
+        return true;
+      } catch (e) {
+        console.error('Failed to load from database:', e);
+        return false;
+      }
+    }
+
+    function exportToPDF() {
+      if (document.activeElement && document.activeElement.tagName === 'INPUT') {
+        document.activeElement.blur();
+      }
+
+      const element = document.querySelector('.a4-page');
+      const actionButtons = document.querySelectorAll('.section-actions');
+      
+      actionButtons.forEach(btn => btn.style.display = 'none');
+
+      const inputs = element.querySelectorAll('input:not([type="checkbox"]), select');
+      inputs.forEach(input => {
+        const parent = input.parentNode;
+        const span = document.createElement('span');
+        span.className = 'temp-pdf-text';
+        span.style.fontSize = '11px';
+        span.style.fontFamily = 'inherit';
+        span.style.display = 'inline-block';
+        
+        if (!input.classList.contains('note-input')) {
+          span.style.textAlign = 'center';
+          span.style.width = '100%';
+        } else {
+          span.style.textAlign = 'left';
+          span.style.paddingLeft = '4px';
+        }
+        
+        if (input.tagName === 'SELECT') {
+          span.innerText = input.options[input.selectedIndex] ? input.options[input.selectedIndex].text : '';
+        } else {
+          span.innerText = input.value || input.getAttribute('value') || '';
+        }
+        
+        input.style.display = 'none';
+        parent.appendChild(span);
+      });
+
+      const starElements = element.querySelectorAll('.star');
+      starElements.forEach(star => {
+        star.dataset.originalStyle = star.getAttribute('style') || '';
+        star.dataset.originalClass = star.className;
+        if (star.classList.contains('full') || star.classList.contains('half')) {
+          star.style.color = '#ffc107';
+          star.style.background = 'none';
+          star.style.webkitTextFillColor = '#ffc107';
+        } else {
+          star.style.color = '#ccc';
+          star.style.background = 'none';
+          star.style.webkitTextFillColor = '#ccc';
+        }
+      });
+
+      const now = new Date();
+      const monthName = now.toLocaleString('en-US', { month: 'long' });
+      const yearNum = now.getFullYear();
+      const dynamicFilename = `Attendance_${monthName}_${yearNum}.pdf`;
+
+      const options = {
+        margin:      [8, 8, 8, 8],
+        filename:    dynamicFilename,
+        image:       { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: ['css', 'legacy'] }
+      };
+
+      setTimeout(() => {
+        html2pdf().set(options).from(element).save().then(() => {
+          cleanupPDFExport(inputs, actionButtons, starElements);
+        }).catch(err => {
+          cleanupPDFExport(inputs, actionButtons, starElements);
+          window.print();
+        });
+      }, 150);
+    }
+
+    function cleanupPDFExport(inputs, actionButtons, starElements) {
+      document.querySelectorAll('.temp-pdf-text').forEach(span => span.remove());
+      inputs.forEach(input => input.style.display = '');
+      actionButtons.forEach(btn => btn.style.display = 'flex');
+      
+      starElements.forEach(star => {
+        star.className = star.dataset.originalClass;
+        star.setAttribute('style', star.dataset.originalStyle);
+      });
+    }
+
+    window.onload = async function() {
+      if (!(await loadFromWebsite())) {
+        addNewSection();
+      }
+    };
+  </script>
+
+</body>
+</html>
