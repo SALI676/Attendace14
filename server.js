@@ -115,6 +115,102 @@ app.put('/api/data', async (req, res) => {
   }
 });
 
+// ---------- Receipts: uses 3 tables (customer_information, program_details, price_list) ----------
+// Create the tables first by running schema.sql in PostgreSQL.
+const str = v => (v === undefined || v === null ? '' : String(v));
+
+// Save (or update) one student's receipt across the 3 tables
+app.put('/api/receipts', async (req, res) => {
+  const { customer, program, prices } = req.body || {};
+  if (!customer || !str(customer.studentName).trim()) {
+    return res.status(400).json({ error: 'customer.studentName is required' });
+  }
+  const p = program || {};
+  const priceRows = Array.isArray(prices) ? prices : [];
+
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    const cust = await client.query(
+      `INSERT INTO customer_information (student_name, mobile_telegram, receipt_date)
+       VALUES ($1, $2, $3)
+       ON CONFLICT (student_name) DO UPDATE
+         SET mobile_telegram = EXCLUDED.mobile_telegram,
+             receipt_date = EXCLUDED.receipt_date,
+             updated_at = now()
+       RETURNING id`,
+      [str(customer.studentName).trim(), str(customer.mobile), str(customer.receiptDate)]
+    );
+    const customerId = cust.rows[0].id;
+
+    await client.query(
+      `INSERT INTO program_details (customer_id, program_name, location, student_type, sessions, start_date)
+       VALUES ($1, $2, $3, $4, $5, $6)
+       ON CONFLICT (customer_id) DO UPDATE
+         SET program_name = EXCLUDED.program_name, location = EXCLUDED.location,
+             student_type = EXCLUDED.student_type, sessions = EXCLUDED.sessions,
+             start_date = EXCLUDED.start_date, updated_at = now()`,
+      [customerId, str(p.program), str(p.location), str(p.studentType), str(p.sessions), str(p.startDate)]
+    );
+
+    await client.query('DELETE FROM price_list WHERE customer_id = $1', [customerId]);
+    for (let i = 0; i < priceRows.length; i++) {
+      const r = priceRows[i] || {};
+      await client.query(
+        `INSERT INTO price_list (customer_id, position, item_no, description, original_price, unit_price, total_price, remark)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        [customerId, i, str(r.no), str(r.description), str(r.originalPrice),
+         str(r.unitPrice), str(r.totalPrice), str(r.remark)]
+      );
+    }
+
+    await client.query('COMMIT');
+    res.json({ success: true, customerId });
+  } catch (err) {
+    await client.query('ROLLBACK');
+    logError('PUT /api/receipts failed:', err);
+    res.status(500).json({ error: 'Failed to save receipt' });
+  } finally {
+    client.release();
+  }
+});
+
+// Load the most recently saved receipt (fills the receipt page when it opens)
+app.get('/api/receipts/latest', async (req, res) => {
+  try {
+    const cust = await pool.query(
+      `SELECT id, student_name, mobile_telegram, receipt_date
+       FROM customer_information ORDER BY updated_at DESC LIMIT 1`
+    );
+    if (cust.rows.length === 0) return res.json(null);
+    const c = cust.rows[0];
+
+    const prog = await pool.query(
+      `SELECT program_name, location, student_type, sessions, start_date
+       FROM program_details WHERE customer_id = $1`, [c.id]
+    );
+    const price = await pool.query(
+      `SELECT item_no AS no, description, original_price AS "originalPrice",
+              unit_price AS "unitPrice", total_price AS "totalPrice", remark
+       FROM price_list WHERE customer_id = $1 ORDER BY position ASC`, [c.id]
+    );
+    const p = prog.rows[0] || {};
+
+    res.json({
+      customer: { studentName: c.student_name, mobile: c.mobile_telegram, receiptDate: c.receipt_date },
+      program: {
+        program: p.program_name || '', location: p.location || '', studentType: p.student_type || '',
+        sessions: p.sessions || '', startDate: p.start_date || ''
+      },
+      prices: price.rows
+    });
+  } catch (err) {
+    logError('GET /api/receipts/latest failed:', err);
+    res.status(500).json({ error: 'Failed to load receipt' });
+  }
+});
+
 app.get('/health', (req, res) => res.json({ ok: true }));
 
 const PORT = process.env.PORT || 3000;
