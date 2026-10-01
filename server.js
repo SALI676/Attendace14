@@ -16,11 +16,12 @@ function logError(label, err) {
 
 app.get('/api/data', async (req, res) => {
   try {
-    const stateRes = await pool.query('SELECT instructor FROM app_state WHERE id = 1');
+    const stateRes = await pool.query('SELECT instructor, receipt FROM app_state WHERE id = 1');
     if (stateRes.rows.length === 0) {
       return res.json(null);
     }
     const instructor = stateRes.rows[0].instructor;
+    const receipt = stateRes.rows[0].receipt || undefined; // receipt + certificate JSON
 
     const sectionsRes = await pool.query(
       'SELECT id, title, note FROM sections WHERE state_id = 1 ORDER BY position ASC'
@@ -47,7 +48,7 @@ app.get('/api/data', async (req, res) => {
       });
     }
 
-    res.json({ instructor, sections });
+    res.json({ instructor, sections, receipt });
   } catch (err) {
     logError('GET /api/data failed:', err);
     res.status(500).json({ error: 'Failed to load data' });
@@ -55,7 +56,7 @@ app.get('/api/data', async (req, res) => {
 });
 
 app.put('/api/data', async (req, res) => {
-  const { instructor, sections } = req.body || {};
+  const { instructor, sections, receipt } = req.body || {};
   if (!Array.isArray(sections)) {
     return res.status(400).json({ error: 'sections must be an array' });
   }
@@ -65,9 +66,12 @@ app.put('/api/data', async (req, res) => {
     await client.query('BEGIN');
 
     await client.query(
-      `INSERT INTO app_state (id, instructor, updated_at) VALUES (1, $1, now())
-       ON CONFLICT (id) DO UPDATE SET instructor = $1, updated_at = now()`,
-      [instructor || '']
+      `INSERT INTO app_state (id, instructor, receipt, updated_at) VALUES (1, $1, $2::jsonb, now())
+       ON CONFLICT (id) DO UPDATE
+         SET instructor = $1,
+             receipt = COALESCE($2::jsonb, app_state.receipt),
+             updated_at = now()`,
+      [instructor || '', receipt ? JSON.stringify(receipt) : null]
     );
 
     await client.query('DELETE FROM sections WHERE state_id = 1');
